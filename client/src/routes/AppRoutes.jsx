@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import PrivateRoutes from "./PrivateRoutes";
+import { Login } from "../pages";
 
 const AppRoutes = () => {
   return (
@@ -9,8 +10,8 @@ const AppRoutes = () => {
         <Route exact path="/dashboard" element={<h1>Dashboard</h1>} />
         <Route path="/reservation" element={<h1>reservation</h1>} />
       </Route>
-      <Route element={<h1>Login</h1>} path="/" />
-      <Route element={<h1>not-found</h1>} path="*" />
+      <Route path="/" element={<Login />} />
+      <Route path="*" element={<h1>NOT FOUND</h1>} />
     </Routes>
   );
 };

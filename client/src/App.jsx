@@ -1,8 +1,13 @@
 import React from "react";
 import { AppRoutes } from "./routes";
+import MainLayout from "./layouts/MainLayout";
 
 const App = () => {
-  return <AppRoutes />;
+  return (
+    <MainLayout>
+      <AppRoutes />
+    </MainLayout>
+  );
 };
 
 export default App;
