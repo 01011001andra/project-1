@@ -10,7 +10,7 @@ import {
 const Login = () => {
   return (
     <div className="min-h-screen w-full bg-base-200  overflow-hidden">
-      <div className="flex w-full  bg-blue-500  justify-center min-h-screen flex-col lg:flex-row-reverse">
+      <div className="flex w-full  bg-slate-200  xl:bg-blue-500  justify-center min-h-screen flex-col lg:flex-row-reverse">
         <div className="text-center  items-center hidden xl:flex  w-1/2 lg:text-left z-20 relative">
           <div className="absolute -left-20">
             <LoginLottie />
@@ -34,7 +34,7 @@ const Login = () => {
             </div>
           </div>
         </div>
-        <div className=" flex flex-col w-full px-4 gap-10 xl:w-1/2 bg-blue-500  xl:bg-slate-200 relative">
+        <div className=" flex flex-col w-full px-4 gap-10 xl:w-1/2 bg-slate-200 relative">
           <div className="w-[170vh] min-h-[170vh] bg-slate-200 hidden xl:flex absolute -top-20 -left-20 rounded-full z-10"></div>
           <div className="flex flex-col gap-5 justify-center min-h-screen w-full max-w-3xl mx-auto z-20">
             <div className="flex flex-col">
