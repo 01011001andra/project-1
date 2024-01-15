@@ -1,5 +1,5 @@
 import React from "react";
-import bajuJson from "../assets/lotties/Baju.json";
+import bajuJson from "../assets/lotties/baju.json";
 import { useLottie } from "lottie-react";
 
 const BajuLottie = () => {
