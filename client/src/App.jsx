@@ -1,6 +1,6 @@
 import React from "react";
 import { AppRoutes } from "./routes";
-import MainLayout from "./layouts/MainLayout";
+import { MainLayout } from "./layouts";
 
 const App = () => {
   return (
