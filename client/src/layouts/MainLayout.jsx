@@ -45,7 +45,7 @@ const MainLayout = ({ children }) => {
               className="drawer-overlay"
             ></label>
 
-            <ul className="menu p-0 w-80 min-h-full flex flex-col gap-12 bg-[#dcdefa] py-20 text-base-content relative">
+            <ul className="menu p-0 w-60 lg:w-80 min-h-full flex flex-col gap-12 bg-[#dcdefa] py-20 text-base-content relative">
               <CiLogout
                 className="absolute top-11 right-11 cursor-pointer hover:text-red-600"
                 size={30}
@@ -54,17 +54,18 @@ const MainLayout = ({ children }) => {
                 }}
               />
               <div className="avatar mx-auto flex flex-col gap-5 items-center justify-center ">
-                <div className="w-24 mask mask-squircle">
+                <div className="w-16 lg:w-24 mask mask-squircle">
                   <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
                 </div>
-                <h3 className="font-bold text-base">Halo Admin!</h3>
+                <h3 className="font-bold text-sm lg:text-lg">Halo Admin!</h3>
               </div>
               <div className="flex flex-col gap-3">
-                {menus?.map((item) => {
+                {menus?.map((item, index) => {
                   return (
                     <Link
+                      key={index}
                       to={item.path}
-                      className={`py-4 flex gap-3 ${
+                      className={`py-4 text-xs lg:text-sm flex gap-3 ${
                         item.path == pathname
                           ? "text-blue-600 bg-gradient-to-r border-l-4 items-center px-6 border-blue-600 font-bold from-blue-100 "
                           : " items-center  text-black px-6  font-light hover:text-blue-600 hover:font-bold transition-all duration-500"
