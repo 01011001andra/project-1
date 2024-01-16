@@ -6,8 +6,24 @@ import {
   JaketLottie,
   LoginLottie,
 } from "../components";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
+
+  const isLogin = true;
+
+  function protectLogin() {
+    if (isLogin) {
+      navigate("/cari-pelanggan");
+      return;
+    }
+  }
+
+  React.useEffect(() => {
+    protectLogin();
+  }, []);
+
   return (
     <div className="min-h-screen w-full bg-base-200  overflow-hidden">
       <div className="flex w-full  bg-slate-200  xl:bg-blue-500  justify-center min-h-screen flex-col lg:flex-row-reverse">

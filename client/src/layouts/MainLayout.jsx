@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { CiLogout } from "react-icons/ci";
 import { menus } from "../utils/constant";
 import { ModalConfirm } from "../components";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 const MainLayout = ({ children }) => {
   const { pathname } = useLocation();
@@ -21,13 +22,21 @@ const MainLayout = ({ children }) => {
         <div className="drawer lg:drawer-open">
           <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
           <div className="drawer-content">
+            <div className="bg-blue-600 py-5 px-4 flex justify-end lg:hidden">
+              <label
+                htmlFor="my-drawer-2"
+                className="drawer-button w-full flex justify-between items-center"
+              >
+                <h3 className="text-white text-lg font-bold">
+                  Laundry<span className="font-light">App</span>
+                </h3>
+                <GiHamburgerMenu
+                  className="cursor-pointer text-white "
+                  size={30}
+                />
+              </label>
+            </div>
             {children}
-            <label
-              htmlFor="my-drawer-2"
-              className="btn btn-primary drawer-button lg:hidden"
-            >
-              Open drawer
-            </label>
           </div>
           <div className="drawer-side">
             <label
@@ -58,7 +67,7 @@ const MainLayout = ({ children }) => {
                       className={`py-4 flex gap-3 ${
                         item.path == pathname
                           ? "text-blue-600 bg-gradient-to-r border-l-4 items-center px-6 border-blue-600 font-bold from-blue-100 "
-                          : " items-center  text-slate-500 px-6  font-light hover:text-blue-600 hover:font-bold transition-all duration-500"
+                          : " items-center  text-black px-6  font-light hover:text-blue-600 hover:font-bold transition-all duration-500"
                       } `}
                     >
                       {item.icon} {item.name}
