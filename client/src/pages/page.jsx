@@ -9,17 +9,18 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useLogin } from "../hooks/auth";
+import { useAuth } from "../stores";
 
 const Login = () => {
+  const { loginResponse } = useAuth();
+
   const { register, handleSubmit } = useForm();
   const mutation = useLogin();
 
   const navigate = useNavigate();
 
-  const isLogin = false;
-
   function protectLogin() {
-    if (isLogin) {
+    if (loginResponse) {
       navigate("/cari-pelanggan");
       return;
     }

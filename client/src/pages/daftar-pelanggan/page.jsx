@@ -15,7 +15,7 @@ const DaftarPelanggan = () => {
       }
       name_page={"Halaman Daftar Pelanggan"}
     >
-      <TabelSetup>
+      <TabelSetup tambah_route="/daftar-pelanggan/tambah">
         <div className="overflow-x-auto ">
           <table className="table">
             {/* head */}

@@ -1,16 +1,28 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { CiLogout } from "react-icons/ci";
 import { menus } from "../utils/constant";
 import { ModalConfirm } from "../components";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { useLogout } from "../hooks/auth";
+import { useAuth } from "../stores";
 
 const MainLayout = ({ children }) => {
   const { pathname } = useLocation();
-  console.log(pathname);
+  const { setLogout } = useAuth();
+  const navigate = useNavigate();
+  const { refetch: refetchLogout } = useLogout();
+
+  function handleLogout() {
+    refetchLogout();
+    navigate("/", { replace: true });
+    setLogout();
+  }
+
   const showMainLayout = [
     "/cari-pelanggan",
     "/daftar-pelanggan",
+    "/daftar-pelanggan/tambah",
     "/diskon",
     "/hasil-penjualan",
     "/rekap-penjualan",
@@ -88,6 +100,7 @@ const MainLayout = ({ children }) => {
           id={"logoutConfirm"}
           title={"Logout?"}
           description={"Anda yakin ingin logout?"}
+          onClick={handleLogout}
         />
       </>
     );

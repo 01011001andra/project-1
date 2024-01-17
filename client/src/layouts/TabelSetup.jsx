@@ -1,8 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const TabelSetup = ({
   tambah = true,
-  tambah_onClick,
+  tambah_route,
   cari = true,
   pagination = true,
   children,
@@ -11,9 +12,12 @@ const TabelSetup = ({
     <div className="w-full flex flex-col  rounded-xl gap-10">
       <div className="flex-col-reverse gap-2 lg:flex-row flex justify-between">
         {tambah && (
-          <button className="btn btn-primary bg-blue-600 text-white">
+          <Link
+            to={tambah_route}
+            className="btn btn-primary bg-blue-600 text-white"
+          >
             Tambah Pelanggan
-          </button>
+          </Link>
         )}
         <div></div>
         {cari && (
