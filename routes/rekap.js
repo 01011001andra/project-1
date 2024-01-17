@@ -8,6 +8,6 @@ router.route('/export').get(protect, exportToExcel);
 
 
 // cari no_telp
-router.route('/:no_telp').get(protect, searchTelp)
+router.route('/search').post(protect, searchTelp)
 
 module.exports = router;

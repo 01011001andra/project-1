@@ -14,6 +14,9 @@ const RekapModel = db.define('rekapData', {
     totalKg: {
         type: DataTypes.FLOAT
     },
+    no_telp: {
+        type: DataTypes.STRING
+    },
     harga: {
         type: DataTypes.STRING
     },
