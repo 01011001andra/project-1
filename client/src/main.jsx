@@ -6,9 +6,12 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ToastContainer } from "react-toastify";
+import axios from "axios";
 
 // Create a client
 const queryClient = new QueryClient();
+axios.defaults.withCredentials = true;
+axios.defaults.baseURL = "http://localhost:5000";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
