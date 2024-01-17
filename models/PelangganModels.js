@@ -16,6 +16,9 @@ const PelangganModel = db.define('Pelanggan', {
     no_telp: {
         type: DataTypes.STRING
     },
+    totalKg: {
+        type: DataTypes.FLOAT
+    },
     // 0: Pending
     // 1: Complete
     status: {

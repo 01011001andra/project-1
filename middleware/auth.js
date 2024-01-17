@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const UserModel = require('../models/userModel');
+const UserModel = require('../models/UserModels');
 
 exports.protect = async (req, res, next) => {
     let token;
