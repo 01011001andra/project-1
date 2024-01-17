@@ -3,7 +3,7 @@ const dotenv = require("dotenv");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const helmet = require("helmet");
-const cors = require('cors');
+const cors = require("cors");
 const db = require("./config/db");
 const upload = require("express-fileupload");
 
@@ -28,7 +28,7 @@ connectDB();
 const app = express();
 app.use(express.json());
 app.use(morgan("dev"));
-app.use(cors({ origin: 'http://localhost:5173' }))
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(cookieParser());
 app.use(helmet());
 app.use(upload());
@@ -37,7 +37,7 @@ app.use(upload());
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/pelanggan", pelangganRoute);
 app.use("/api/v1/diskon", diskonRoute);
-app.use('/api/v1/rekap', rekapRoute);
+app.use("/api/v1/rekap", rekapRoute);
 
 const PORT = process.env.PORT || 5000;
 

@@ -36,7 +36,7 @@ const CariPelanggan = () => {
           </button>
         </div>
       </div>
-      
+
       <form className="flex flex-col gap-6 py-10 bg-[#dcdefa] p-5 rounded-lg">
         <h1 className="font-bold text-xl text-center">
           Tambah pelanggan baru!
@@ -87,7 +87,7 @@ const CariPelanggan = () => {
         </div>
         <button className="btn btn-success text-white">Submit</button>
       </form>
-      
+
       {/* <h2 className="">Silahkan masukkan nomor hp untuk cari pelanggan...</h2> */}
       <PelangganModal />
     </ContentLayout>

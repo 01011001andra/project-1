@@ -1,9 +1,9 @@
 const { Sequelize } = require("sequelize");
 
 // db aku
-const db = new Sequelize('loundry', 'sa', '123456', {
-    host: 'localhost',
-    dialect: 'mssql'
+const db = new Sequelize("loundry", "sa", "123456", {
+  host: "localhost",
+  dialect: "mssql",
 });
 
 // db
