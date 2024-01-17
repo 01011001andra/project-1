@@ -1,4 +1,4 @@
-const PelangganModel = require("../models/pelangganModel")
+const PelangganModel = require("../models/PelangganModels")
 
 exports.get = async (req, res, next) => {
     try {
@@ -51,6 +51,14 @@ exports.remove = async (req, res, next) => {
     try {
         await PelangganModel.destroy({ where: { id: req.params.id } });
         res.status(200).json({ success: true, msg: 'Pelanggan Berhasil dihapus!' })
+    } catch (error) {
+        res.status(500).json({ success: false, msg: error.message })
+    };
+}
+exports.complete = async (req, res, next) => {
+    try {
+
+        res.status(200).json({ success: true, msg: '' })
     } catch (error) {
         res.status(500).json({ success: false, msg: error.message })
     };
