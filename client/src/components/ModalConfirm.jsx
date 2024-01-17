@@ -1,6 +1,6 @@
 import React from "react";
 
-const ModalConfirm = ({ id, title, description }) => {
+const ModalConfirm = ({ id, title, description, ...props }) => {
   return (
     <dialog id={id} className="modal">
       <div className="modal-box">
@@ -15,7 +15,9 @@ const ModalConfirm = ({ id, title, description }) => {
             >
               Batal
             </button>
-            <button className="btn btn-success text-white">Lanjut</button>
+            <button className="btn btn-success text-white" {...props}>
+              Lanjut
+            </button>
           </div>
         </div>
       </div>
