@@ -1,11 +1,14 @@
 import React from "react";
 import { ContentLayout, TabelSetup } from "../../layouts";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaUserEdit } from "react-icons/fa";
 import { RiDeleteBin2Fill } from "react-icons/ri";
 import { PiWhatsappLogoDuotone } from "react-icons/pi";
+import { ModalConfirm } from "../../components";
 
 const DaftarPelanggan = () => {
+  const navigate = useNavigate();
+
   return (
     <ContentLayout
       navigasi={
@@ -23,9 +26,11 @@ const DaftarPelanggan = () => {
               <tr>
                 <th>No</th>
                 <th>Nama</th>
-                <th>Nomor WA</th>
                 <th>Alamat</th>
-                <th>Tanggal Pembelian</th>
+                <th>No Telp</th>
+                <th>Berat(Kg) </th>
+                <th>Harga</th>
+                <th>Status</th>
                 <th className="text-center">Aksi</th>
               </tr>
             </thead>
@@ -37,9 +42,26 @@ const DaftarPelanggan = () => {
                 <td>Quality Control Specialist</td>
                 <td>Blue</td>
                 <td>12/12/2012</td>
+                <td>Rp. 12.000</td>
+                <td
+                  className="text-red-600 font-bold uppercase
+                "
+                >
+                  Belum selesai
+                </td>
                 <td className="flex gap-3 items-center justify-center ">
-                  <RiDeleteBin2Fill size={25} />
-                  <FaUserEdit size={25} />
+                  <RiDeleteBin2Fill
+                    onClick={() => {
+                      document.getElementById("delete_pelanggan").showModal();
+                    }}
+                    size={25}
+                    className="cursor-pointer hover:text-red-600"
+                  />
+                  <FaUserEdit
+                    size={25}
+                    onClick={() => navigate("/daftar-pelanggan/update")}
+                    className="cursor-pointer hover:text-green-600"
+                  />
                   <PiWhatsappLogoDuotone size={25} />
                 </td>
               </tr>
@@ -47,6 +69,11 @@ const DaftarPelanggan = () => {
           </table>
         </div>
       </TabelSetup>
+      <ModalConfirm
+        title={"Menghapus !"}
+        description={"Hapus pelanggan ini ?"}
+        id={"delete_pelanggan"}
+      />
     </ContentLayout>
   );
 };
