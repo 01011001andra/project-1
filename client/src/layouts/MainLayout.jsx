@@ -23,6 +23,7 @@ const MainLayout = ({ children }) => {
     "/cari-pelanggan",
     "/daftar-pelanggan",
     "/daftar-pelanggan/tambah",
+    "/daftar-pelanggan/update",
     "/diskon",
     "/hasil-penjualan",
     "/rekap-penjualan",

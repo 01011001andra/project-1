@@ -16,7 +16,7 @@ const ModalConfirm = ({ id, title, description, ...props }) => {
               Batal
             </button>
             <button className="btn btn-success text-white" {...props}>
-              Lanjut
+              Lanjutkan
             </button>
           </div>
         </div>

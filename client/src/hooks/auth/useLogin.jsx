@@ -24,7 +24,7 @@ const useLogin = () => {
       setLoginResponse(data?.data);
       navigate("/cari-pelanggan");
 
-      queryClient.invalidateQueries(["auth"]);
+      queryClient.invalidateQueries({ queryKey: ["auth"] });
     },
   });
 
