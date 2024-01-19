@@ -14,12 +14,16 @@ const RekapModel = db.define('rekapData', {
     totalKg: {
         type: DataTypes.FLOAT
     },
+    alamat: {
+        type: DataTypes.TEXT
+    },
+    no_telp: {
+        type: DataTypes.STRING
+    },
     harga: {
         type: DataTypes.STRING
     },
 });
 
-PelangganModel.hasMany(RekapModel);
-RekapModel.belongsTo(PelangganModel);
 
 module.exports = RekapModel;

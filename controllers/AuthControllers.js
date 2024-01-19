@@ -32,7 +32,6 @@ exports.autoAdmin = async (req, res, next) => {
                 username: 'admin',
                 password: '112233'
             })
-            res.status(200).json({ success: true, msg: 'Admin Berhasil dibuat!' });
         }
         res.status(200).json({ success: true, msg: 'Selamat Datang!' });
     } catch (error) {

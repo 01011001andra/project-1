@@ -1,5 +1,6 @@
 const { Sequelize } = require("sequelize");
 const PelangganModel = require("../models/PelangganModels");
+const RekapModel = require("../models/RekapModels");
 
 // exports.get = async (req, res, next) => {
 //   try {
@@ -80,7 +81,6 @@ exports.create = async (req, res, next) => {
       nama: req.body.nama,
       alamat: req.body.alamat,
       no_telp: req.body.no_telp,
-      totalKg: req.body.totalKg,
       status: 0,
     });
     res
