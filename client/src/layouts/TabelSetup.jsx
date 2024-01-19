@@ -49,7 +49,7 @@ const TabelSetup = ({
             to={tambah_route}
             className="btn btn-primary bg-blue-600 text-white"
           >
-            Tambah Pelanggan
+            Tambah
           </Link>
         )}
         <div></div>

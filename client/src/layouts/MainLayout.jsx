@@ -28,9 +28,7 @@ const MainLayout = ({ children }) => {
     // "/hasil-penjualan",
     // "/rekap-penjualan",
     "/",
-    
   ];
-  console.log(pathname);
   if (!showMainLayout.includes(pathname)) {
     return (
       <>

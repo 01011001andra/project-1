@@ -1,16 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import React from "react";
 
-const getAll = (body) => {
-  return axios.get(
-    `/api/v1/diskon?page=${body.currentPage}&&pageSize=10&searchTerm=${body.searchTerm}`
-  );
+const getOne = (body) => {
+  return axios.get(`/api/v1/diskon/${body.id}`);
 };
 
-const useGetDiskon = (body) => {
+const useGetOneDiskon = (body) => {
   const query = useQuery({
     queryFn: () => {
-      return getAll(body);
+      return getOne(body);
     },
     queryKey: ["diskon", body],
     select: (data) => data?.data,
@@ -19,4 +18,4 @@ const useGetDiskon = (body) => {
   return query;
 };
 
-export default useGetDiskon;
+export default useGetOneDiskon;

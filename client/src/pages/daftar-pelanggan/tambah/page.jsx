@@ -63,7 +63,7 @@ const TambahPelanggan = () => {
           </label>
           <label className="form-control w-full ">
             <div className="label">
-              <span className="label-text">Berat :</span>
+              <span className="label-text">Berat (Kg) :</span>
             </div>
             <input
               type="number"

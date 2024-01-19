@@ -1,22 +1,23 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-const getAll = (body) => {
+const getAll = async (body) => {
   return axios.get(
-    `/api/v1/diskon?page=${body.currentPage}&&pageSize=10&searchTerm=${body.searchTerm}`
+    `/api/v1/rekap?page=${body.currentPage}&&pageSize=10&searchTerm=${body.searchTerm}`
   );
 };
 
-const useGetDiskon = (body) => {
+const useGetRekap = (body) => {
+  console.log(body);
   const query = useQuery({
     queryFn: () => {
       return getAll(body);
     },
-    queryKey: ["diskon", body],
+    queryKey: ["rekap", body],
     select: (data) => data?.data,
   });
 
   return query;
 };
 
-export default useGetDiskon;
+export default useGetRekap;

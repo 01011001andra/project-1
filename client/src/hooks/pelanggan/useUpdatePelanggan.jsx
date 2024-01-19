@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const updatePelanggan = (body) => {
+  console.log(body);
   return axios.put(`/api/v1/pelanggan/${body.id}`, {
     nama: body.nama,
     alamat: body.alamat,
