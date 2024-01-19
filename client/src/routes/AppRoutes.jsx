@@ -8,7 +8,9 @@ import {
   HasilPenjualan,
   Login,
   RekapPenjualan,
+  TambahDiskon,
   TambahPelanggan,
+  UpdateDiskon,
   UpdatePelanggan,
 } from "../pages";
 
@@ -19,8 +21,13 @@ const AppRoutes = () => {
         <Route exact path="/cari-pelanggan" element={<CariPelanggan />} />
         <Route path="/daftar-pelanggan" element={<DaftarPelanggan />} />
         <Route path="/daftar-pelanggan/tambah" element={<TambahPelanggan />} />
-        <Route path="/daftar-pelanggan/update" element={<UpdatePelanggan />} />
+        <Route
+          path="/daftar-pelanggan/update/:id"
+          element={<UpdatePelanggan />}
+        />
         <Route path="/diskon" element={<Diskon />} />
+        <Route path="/diskon/tambah" element={<TambahDiskon />} />
+        <Route path="/diskon/update/:id" element={<UpdateDiskon />} />
         <Route path="/hasil-penjualan" element={<HasilPenjualan />} />
         <Route path="/rekap-penjualan" element={<RekapPenjualan />} />
       </Route>

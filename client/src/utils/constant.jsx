@@ -1,5 +1,6 @@
 import { MdPersonSearch, MdDiscount, MdSummarize } from "react-icons/md";
 import { FaPeopleGroup, FaMoneyBillTrendUp } from "react-icons/fa6";
+
 export const menus = [
   {
     name: "CARI PELANGGAN",

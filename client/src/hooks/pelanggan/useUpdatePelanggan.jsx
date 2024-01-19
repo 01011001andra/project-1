@@ -1,10 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const createPelanggan = (body) => {
-  return axios.post("/api/v1/pelanggan", {
+const updatePelanggan = (body) => {
+  console.log(body);
+  return axios.put(`/api/v1/pelanggan/${body.id}`, {
     nama: body.nama,
     alamat: body.alamat,
     no_telp: body.no_telp,
@@ -12,13 +12,13 @@ const createPelanggan = (body) => {
   });
 };
 
-const usePostPelanggan = () => {
+const useUpdatePelanggan = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   const mutation = useMutation({
     mutationFn: (body) => {
-      return createPelanggan(body);
+      return updatePelanggan(body);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["pelanggan"] });
@@ -29,4 +29,4 @@ const usePostPelanggan = () => {
   return mutation;
 };
 
-export default usePostPelanggan;
+export default useUpdatePelanggan;

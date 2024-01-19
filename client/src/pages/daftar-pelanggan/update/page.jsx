@@ -1,14 +1,28 @@
 import React from "react";
 import { ContentLayout } from "../../../layouts";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useGetOnePelanggan, useUpdatePelanggan } from "../../../hooks";
 
 const UpdatePelanggan = () => {
-  const { register, handleSubmit, watch } = useForm();
-
+  const { id } = useParams();
+  const { register, handleSubmit, setValue } = useForm();
+  const mutation = useUpdatePelanggan();
+  const { data: daftarOnePelangganData } = useGetOnePelanggan({ id });
+  console.log(daftarOnePelangganData);
   const onSubmit = (body) => {
-    console.log(body);
+    mutation.mutate({ ...body, id });
   };
+
+  function setDefaultValue() {
+    setValue("nama", daftarOnePelangganData?.data?.nama);
+    setValue("alamat", daftarOnePelangganData?.data?.alamat);
+    setValue("no_telp", daftarOnePelangganData?.data?.no_telp);
+    setValue("totalKg", daftarOnePelangganData?.data?.totalKg);
+  }
+  React.useEffect(() => {
+    setDefaultValue();
+  }, [daftarOnePelangganData]);
 
   return (
     <ContentLayout
