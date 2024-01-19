@@ -8,6 +8,8 @@ import {
   HasilPenjualan,
   Login,
   RekapPenjualan,
+  TambahPelanggan,
+  UpdatePelanggan,
 } from "../pages";
 
 const AppRoutes = () => {
@@ -16,6 +18,11 @@ const AppRoutes = () => {
       <Route element={<PrivateRoutes />}>
         <Route exact path="/cari-pelanggan" element={<CariPelanggan />} />
         <Route path="/daftar-pelanggan" element={<DaftarPelanggan />} />
+        <Route path="/daftar-pelanggan/tambah" element={<TambahPelanggan />} />
+        <Route
+          path="/daftar-pelanggan/update/:id"
+          element={<UpdatePelanggan />}
+        />
         <Route path="/diskon" element={<Diskon />} />
         <Route path="/hasil-penjualan" element={<HasilPenjualan />} />
         <Route path="/rekap-penjualan" element={<RekapPenjualan />} />

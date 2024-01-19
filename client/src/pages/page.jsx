@@ -7,18 +7,29 @@ import {
   LoginLottie,
 } from "../components";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { useLogin } from "../hooks/auth";
+import { useAuth } from "../stores";
 
 const Login = () => {
+  const { loginResponse } = useAuth();
+
+  const { register, handleSubmit } = useForm();
+  const mutation = useLogin();
+
   const navigate = useNavigate();
 
-  const isLogin = true;
-
   function protectLogin() {
-    if (isLogin) {
+    if (loginResponse) {
       navigate("/cari-pelanggan");
       return;
     }
   }
+
+  const onSubmit = (body) => {
+    // console.log("masuk");
+    mutation.mutate(body);
+  };
 
   React.useEffect(() => {
     protectLogin();
@@ -50,6 +61,7 @@ const Login = () => {
             </div>
           </div>
         </div>
+        {/* form login */}
         <div className=" flex flex-col w-full px-4 gap-10 xl:w-1/2 bg-slate-200 relative">
           <div className="w-[170vh] min-h-[170vh] bg-slate-200 hidden xl:flex absolute -top-20 -left-20 rounded-full z-10"></div>
           <div className="flex flex-col gap-5 justify-center min-h-screen w-full max-w-3xl mx-auto z-20">
@@ -63,10 +75,14 @@ const Login = () => {
             <h3 className="text-blue-600 font-bold text-lg tracking-wider">
               Login to your account
             </h3>
-            <form className="max-w-xl w-full flex flex-col gap-4">
+            <form
+              className="max-w-xl w-full flex flex-col gap-4"
+              onSubmit={handleSubmit(onSubmit)}
+            >
               <div className="flex flex-col gap-5">
                 <div className="form-control">
                   <input
+                    {...register("username")}
                     type="text"
                     placeholder="Masukkan username"
                     className="py-4 border-2 bg-transparent  border-b-black/40  outline-none focus:text-blue-600 focus:font-bold focus:border-b-blue-600"
@@ -75,8 +91,9 @@ const Login = () => {
                 </div>
                 <div className="form-control">
                   <input
-                    type="text"
-                    placeholder="Masukkan username"
+                    type="password"
+                    {...register("password")}
+                    placeholder="Masukkan password"
                     className="py-4 border-2 bg-transparent  border-b-black/40 outline-none focus:text-blue-600 focus:font-bold focus:border-b-blue-600"
                     required
                   />
@@ -91,7 +108,10 @@ const Login = () => {
                 </label>
               </div>
               <div className="form-control mt-6">
-                <button className="btn bg-gradient-to-r from-blue-500 via-blue-600 to-blue-800 text-white hover:bg-gradient-to-l hover:from-blue-300 hover:via-blue-500 hover:to-blue-700 hover:transition-all hover:duration-1000 font-bold uppercase border-none outline-none text-lg">
+                <button
+                  type="submit"
+                  className="btn bg-gradient-to-r from-blue-500 via-blue-600 to-blue-800 text-white hover:bg-gradient-to-l hover:from-blue-300 hover:via-blue-500 hover:to-blue-700 hover:transition-all hover:duration-1000 font-bold uppercase border-none outline-none text-lg"
+                >
                   Login
                 </button>
               </div>

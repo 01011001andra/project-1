@@ -1,4 +1,4 @@
-const UserModel = require("../models/userModel");
+const UserModel = require("../models/UserModels");
 
 exports.loginValidation = async (req, res, next) => {
     try {

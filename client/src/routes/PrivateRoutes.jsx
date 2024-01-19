@@ -1,8 +1,10 @@
 import { Outlet, Navigate } from "react-router-dom";
+import { useAuth } from "../stores";
 
 const PrivateRoutes = () => {
-  let auth = { token: true };
-  return auth.token ? <Outlet /> : <Navigate to="/" />;
+  const { loginResponse } = useAuth();
+
+  return loginResponse ? <Outlet /> : <Navigate to="/" />;
 };
 
 export default PrivateRoutes;

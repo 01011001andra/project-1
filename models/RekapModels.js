@@ -1,6 +1,6 @@
 const db = require('../config/db');
 const { DataTypes } = require('sequelize');
-const PelangganModel = require('./pelangganModel');
+const PelangganModel = require('./PelangganModels');
 
 const RekapModel = db.define('rekapData', {
     id: {
