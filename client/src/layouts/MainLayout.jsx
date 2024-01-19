@@ -20,16 +20,18 @@ const MainLayout = ({ children }) => {
   }
 
   const showMainLayout = [
-    "/cari-pelanggan",
-    "/daftar-pelanggan",
-    "/daftar-pelanggan/tambah",
-    "/daftar-pelanggan/update",
-    "/diskon",
-    "/hasil-penjualan",
-    "/rekap-penjualan",
+    // "/cari-pelanggan",
+    // "/daftar-pelanggan",
+    // "/daftar-pelanggan/tambah",
+    // "/daftar-pelanggan/update/*",
+    // "/diskon",
+    // "/hasil-penjualan",
+    // "/rekap-penjualan",
+    "/",
+    
   ];
-
-  if (showMainLayout.includes(pathname)) {
+  console.log(pathname);
+  if (!showMainLayout.includes(pathname)) {
     return (
       <>
         <div className="drawer lg:drawer-open">

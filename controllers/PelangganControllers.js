@@ -38,11 +38,6 @@ exports.get = async (req, res) => {
               [Sequelize.Op.like]: `%${searchTerm}%`,
             },
           },
-          {
-            totalKg: {
-              [Sequelize.Op.like]: `%${searchTerm}%`,
-            },
-          },
         ],
       };
     }
@@ -53,7 +48,7 @@ exports.get = async (req, res) => {
     const totalPages = Math.ceil(totalCount / pageSize);
 
     const get = await PelangganModel.findAll({
-      order: [["status", "ASC"]],
+      // order: [["ASC"]],
       where: condition,
       offset: (page - 1) * pageSize,
       limit: pageSize,

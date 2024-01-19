@@ -1,13 +1,16 @@
 import React from "react";
 import { ContentLayout } from "../../../layouts";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useUpdatePelanggan } from "../../../hooks";
 
 const UpdatePelanggan = () => {
+  const { id } = useParams();
   const { register, handleSubmit, watch } = useForm();
+  const mutation = useUpdatePelanggan();
 
   const onSubmit = (body) => {
-    console.log(body);
+    mutation.mutate({ ...body, id });
   };
 
   return (

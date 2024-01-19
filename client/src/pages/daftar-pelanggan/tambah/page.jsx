@@ -2,12 +2,14 @@ import React from "react";
 import { ContentLayout } from "../../../layouts";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { usePostPelanggan } from "../../../hooks";
 
 const TambahPelanggan = () => {
   const { register, handleSubmit, watch } = useForm();
+  const mutation = usePostPelanggan();
 
   const onSubmit = (body) => {
-    console.log(body);
+    mutation.mutate(body);
   };
 
   return (
@@ -75,7 +77,7 @@ const TambahPelanggan = () => {
           <Link to={"/daftar-pelanggan"} className="btn btn-error text-white">
             Kembali
           </Link>
-          <button className="btn btn-success text-white">Update</button>
+          <button className="btn btn-success text-white">Submit</button>
         </div>
       </form>
     </ContentLayout>
