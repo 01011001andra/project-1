@@ -11,7 +11,7 @@ const TambahDiskon = () => {
   const onSubmit = (data) => {
     console.log(data);
     mutation.mutate({
-      total: parseInt(data.total),
+      total: parseFloat(data.total),
       persen: parseInt(data.persen),
     });
   };
@@ -38,6 +38,7 @@ const TambahDiskon = () => {
             </div>
             <input
               type="number"
+              step={0.01}
               {...register("total")}
               placeholder="Type here"
               className="input input-bordered w-full "

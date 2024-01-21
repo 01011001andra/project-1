@@ -8,7 +8,7 @@ const DiskonModel = db.define('diskon', {
         primaryKey: true
     },
     total: {
-        type: DataTypes.INTEGER
+        type: DataTypes.FLOAT
     },
     persen: {
         type: DataTypes.INTEGER

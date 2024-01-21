@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ContentLayout, TabelSetup } from "../../layouts";
 import { Link } from "react-router-dom";
 import { useGetExport, useGetRekap } from "../../hooks";
@@ -9,7 +9,6 @@ const RekapPenjualan = () => {
   const { currentPage, searchTerm } = usePagination();
   const { data: rekapData } = useGetRekap({ currentPage, searchTerm });
   const { data: exportData, refetch: exportRefetch } = useGetExport();
-  console.log(exportData);
 
   return (
     <ContentLayout
