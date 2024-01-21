@@ -38,7 +38,7 @@ const TambahDiskon = () => {
             </div>
             <input
               type="number"
-              step={0.01}
+              step="0.01"
               {...register("total")}
               placeholder="Type here"
               className="input input-bordered w-full "

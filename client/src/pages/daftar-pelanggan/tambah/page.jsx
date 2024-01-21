@@ -67,6 +67,7 @@ const TambahPelanggan = () => {
             </div>
             <input
               type="number"
+              step={0.01}
               {...register("totalKg")}
               placeholder="Type here"
               className="input input-bordered w-full "

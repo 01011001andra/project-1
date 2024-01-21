@@ -8,7 +8,7 @@ const createPelanggan = (body) => {
     nama: body.nama,
     alamat: body.alamat,
     no_telp: body.no_telp,
-    totalKg: body.totalKg,
+    totalKg: parseFloat(body.totalKg),
   });
 };
 
