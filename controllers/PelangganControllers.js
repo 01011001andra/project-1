@@ -2,7 +2,7 @@ const { Sequelize } = require("sequelize");
 const PelangganModel = require("../models/PelangganModels");
 const RekapModel = require("../models/RekapModels");
 const db = require("../config/db");
-const wbm = require('wbm');
+const wbm = require("wbm");
 
 exports.get = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
@@ -128,9 +128,9 @@ exports.complete = async (req, res, next) => {
       totalKg: get.totalKg,
       alamat: get.alamat,
       no_telp: get.no_telp,
-      harga: req.body.harga
+      harga: req.body.harga,
     });
-    res.status(200).json({ success: true, msg: "Data berhasil disimpan direkap!" });
+    next();
   } catch (error) {
     res.status(500).json({ success: false, msg: error.message });
   }
