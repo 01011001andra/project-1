@@ -18,6 +18,7 @@ const usePostWhatsapp = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["pelanggan"] });
       navigate("/rekap-penjualan");
+      
     },
   });
 

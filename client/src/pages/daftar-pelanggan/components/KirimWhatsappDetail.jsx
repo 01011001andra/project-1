@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useGetDiskon, usePostWhatsapp } from "../../../hooks";
 import { toRupiah } from "../../../utils/helper";
+import { useNavigate } from "react-router";
 
 const KirimWhatsappDetail = ({ detailPelanggan }) => {
   const [harga, setHarga] = useState();
   const [berat, setBerat] = useState();
   const { data: diskonData } = useGetDiskon({});
   const mutation = usePostWhatsapp();
+  const navigate = useNavigate();
 
   const { register, handleSubmit, setValue } = useForm();
 
@@ -24,7 +26,28 @@ const KirimWhatsappDetail = ({ detailPelanggan }) => {
       id: detailPelanggan?.data?.id,
       harga: availableHarga,
     };
-    mutation.mutate(body);
+
+    mutation
+      .mutateAsync(body)
+      .then((res) => {
+        const nomorWhatsApp = "+628990418858";
+        const pesanTeks = encodeURIComponent(`Hi! pesanan kamu sudah siap.
+     berikut rinciannya:
+    
+     total kg: ${body?.totalKg} kg
+     harga : Rp. ${toRupiah(availableHarga)}
+     diskon: ${diskonByBerat ? `${diskonByBerat?.persen}%` : "-"}
+     total harga: ${toRupiah(availableHarga)}
+    
+     Terima kasih.`);
+
+        const linkWhatsApp = `https://wa.me/${nomorWhatsApp}?text=${pesanTeks}`;
+
+        window.open(linkWhatsApp, "_blank");
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   React.useEffect(() => {
