@@ -2,6 +2,7 @@ const { Sequelize } = require("sequelize");
 const PelangganModel = require("../models/PelangganModels");
 const RekapModel = require("../models/RekapModels");
 const db = require("../config/db");
+
 exports.get = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const pageSize = parseInt(req.query.pageSize) || 10;
@@ -126,7 +127,7 @@ exports.complete = async (req, res, next) => {
       totalKg: get.totalKg,
       alamat: get.alamat,
       no_telp: get.no_telp,
-      harga: req.body.harga
+      harga: req.body.harga,
     });
     next();
   } catch (error) {

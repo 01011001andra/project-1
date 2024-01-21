@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useGetDiskon, usePostPelanggan } from "../../../hooks";
+import { useGetDiskon, usePostWhatsapp } from "../../../hooks";
 import { toRupiah } from "../../../utils/helper";
 
 const KirimWhatsappDetail = ({ detailPelanggan }) => {
   const [harga, setHarga] = useState();
   const [berat, setBerat] = useState();
   const { data: diskonData } = useGetDiskon({});
+  const mutation = usePostWhatsapp();
 
   const { register, handleSubmit, setValue } = useForm();
-  const mutation = usePostPelanggan();
 
-  const diskonByBerat = diskonData?.gabungan.find(
-    (item) => item.total <= detailPelanggan?.data?.totalKg
-  );
+  const diskonByBerat = diskonData?.gabungan
+    .filter((item) => item.total <= detailPelanggan?.data?.totalKg)
+    .pop();
 
   const onSubmit = (data) => {
     const availableHarga =
@@ -21,9 +21,10 @@ const KirimWhatsappDetail = ({ detailPelanggan }) => {
 
     let body = {
       ...data,
+      id: detailPelanggan?.data?.id,
       harga: availableHarga,
     };
-    console.log(body);
+    mutation.mutate(body);
   };
 
   React.useEffect(() => {
