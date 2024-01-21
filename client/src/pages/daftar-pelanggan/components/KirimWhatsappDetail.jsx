@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useGetDiskon, usePostWhatsapp } from "../../../hooks";
-import { toRupiah } from "../../../utils/helper";
+import { formatNomorTelepon, toRupiah } from "../../../utils/helper";
 import { useNavigate } from "react-router";
 
 const KirimWhatsappDetail = ({ detailPelanggan }) => {
@@ -10,12 +10,11 @@ const KirimWhatsappDetail = ({ detailPelanggan }) => {
   const { data: diskonData } = useGetDiskon({});
   const mutation = usePostWhatsapp();
   const navigate = useNavigate();
-
   const { register, handleSubmit, setValue } = useForm();
 
-  const diskonByBerat = diskonData?.gabungan
-    .filter((item) => item.total <= detailPelanggan?.data?.totalKg)
-    .pop();
+  const diskonByBerat = diskonData?.gabungan?.find(
+    (item) => detailPelanggan?.data?.totalKg >= item?.total
+  );
 
   const onSubmit = (data) => {
     const availableHarga =
@@ -30,16 +29,20 @@ const KirimWhatsappDetail = ({ detailPelanggan }) => {
     mutation
       .mutateAsync(body)
       .then((res) => {
-        const nomorWhatsApp = "+628990418858";
+        const nomorWhatsApp = formatNomorTelepon(body.no_telp);
         const pesanTeks = encodeURIComponent(`Hi! pesanan kamu sudah siap.
-     berikut rinciannya:
-    
-     total kg: ${body?.totalKg} kg
-     harga : Rp. ${toRupiah(availableHarga)}
-     diskon: ${diskonByBerat ? `${diskonByBerat?.persen}%` : "-"}
-     total harga: ${toRupiah(availableHarga)}
-    
-     Terima kasih.`);
+berikut rinciannya:
+        
+total kg: ${body?.totalKg} kg
+harga : Rp. ${toRupiah(harga)}
+diskon: ${diskonByBerat ? `${diskonByBerat?.persen}%` : "-"}
+total harga: ${
+          diskonByBerat
+            ? toRupiah(harga - (harga * diskonByBerat?.persen) / 100)
+            : toRupiah(harga)
+        }
+        
+Terima kasih.`);
 
         const linkWhatsApp = `https://wa.me/${nomorWhatsApp}?text=${pesanTeks}`;
 
@@ -143,7 +146,7 @@ const KirimWhatsappDetail = ({ detailPelanggan }) => {
                         ? toRupiah(
                             harga - (harga * diskonByBerat?.persen) / 100
                           )
-                        : harga}
+                        : toRupiah(harga)}
                     </td>
                   </tr>
                 </tbody>

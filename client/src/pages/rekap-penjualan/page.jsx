@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { saveAs } from "file-saver";
 import { ContentLayout, TabelSetup } from "../../layouts";
 import { Link } from "react-router-dom";
 import { useGetExport, useGetRekap } from "../../hooks";
@@ -8,7 +9,30 @@ import { toRupiah } from "../../utils/helper";
 const RekapPenjualan = () => {
   const { currentPage, searchTerm } = usePagination();
   const { data: rekapData } = useGetRekap({ currentPage, searchTerm });
-  const { data: exportData, refetch: exportRefetch } = useGetExport();
+  const {
+    data: exportData,
+    refetch: exportRefetch,
+    isFetching: exportIsFetching,
+  } = useGetExport();
+  async function handleExportClick() {
+    if (exportIsFetching) {
+      return null;
+    }
+
+    try {
+      const response = await exportRefetch();
+      const url = window.URL.createObjectURL(new Blob([response?.data?.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `rekap.xlsx`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error("Error exporting to Excel:", error);
+      // Handle the error as needed
+    }
+  }
 
   return (
     <ContentLayout
@@ -25,7 +49,7 @@ const RekapPenjualan = () => {
         button_tambahan={
           <button
             onClick={() => {
-              exportRefetch();
+              handleExportClick();
             }}
             className="btn btn-success text-white"
           >
@@ -49,7 +73,7 @@ const RekapPenjualan = () => {
             <tbody>
               {rekapData?.data?.map((item, index) => {
                 return (
-                  <tr>
+                  <tr key={index}>
                     <th>{index + 1}</th>
                     <td>{item.tanggal}</td>
                     <td>{item.totalKg}</td>
