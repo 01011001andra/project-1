@@ -5,9 +5,14 @@ import { FaUserEdit } from "react-icons/fa";
 import { RiDeleteBin2Fill } from "react-icons/ri";
 import { PiWhatsappLogoDuotone } from "react-icons/pi";
 import { ModalConfirm } from "../../components";
-import { useDeletePelanggan, useGetPelanggan } from "../../hooks";
+import {
+  useDeletePelanggan,
+  useGetOnePelanggan,
+  useGetPelanggan,
+} from "../../hooks";
 import { usePagination } from "../../stores";
 import { toRupiah } from "../../utils/helper";
+import { KirimWhatsappDetail } from "./components";
 
 const DaftarPelanggan = () => {
   const { currentPage, searchTerm } = usePagination();
@@ -17,6 +22,7 @@ const DaftarPelanggan = () => {
     isFetching: pelangganIsFetching,
     isLoading: pelangganIsLoad,
   } = useGetPelanggan({ searchTerm, currentPage });
+  const { data: OnePelanggan } = useGetOnePelanggan({ id: idPelanggan });
   const mutation = useDeletePelanggan();
   const navigate = useNavigate();
 
@@ -86,9 +92,18 @@ const DaftarPelanggan = () => {
                         onClick={() =>
                           navigate(`/daftar-pelanggan/update/${item.id}`)
                         }
-                        className="cursor-pointer hover:text-green-600"
+                        className="cursor-pointer hover:text-blue-600"
                       />
-                      <PiWhatsappLogoDuotone size={25} />
+                      <PiWhatsappLogoDuotone
+                        size={25}
+                        className="cursor-pointer hover:text-green-600"
+                        onClick={() => {
+                          setIdPelanggan(item.id);
+                          document
+                            .getElementById("KirimWhatsappDetail")
+                            .showModal();
+                        }}
+                      />
                     </td>
                   </tr>
                 );
@@ -103,6 +118,7 @@ const DaftarPelanggan = () => {
         id={"delete_pelanggan"}
         onClick={handleDelete}
       />
+      <KirimWhatsappDetail detailPelanggan={OnePelanggan} />
     </ContentLayout>
   );
 };

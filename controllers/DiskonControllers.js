@@ -37,6 +37,13 @@ exports.get = async (req, res) => {
       offset: (page - 1) * pageSize,
       limit: pageSize,
     });
+    const semuaTotal = await DiskonModel.findAll();
+
+    // Ambil semua nilai dari atribut 'total' dan 'persen'
+    const gabungan = semuaTotal.map((diskon) => ({
+      total: diskon.total,
+      persen: diskon.persen,
+    }));
 
     res.status(200).json({
       success: true,
@@ -44,6 +51,7 @@ exports.get = async (req, res) => {
       totalPages: totalPages,
       total: totalCount,
       data: get,
+      gabungan,
     });
   } catch (error) {
     res.status(500).json({ success: false, msg: error.message });
