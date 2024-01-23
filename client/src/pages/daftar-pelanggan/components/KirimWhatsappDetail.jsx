@@ -16,6 +16,8 @@ const KirimWhatsappDetail = ({ detailPelanggan }) => {
     (item) => detailPelanggan?.data?.totalKg >= item?.total
   );
 
+  
+
   const onSubmit = (data) => {
     const availableHarga =
       harga - (harga * diskonByBerat?.persen) / 100 || harga;
