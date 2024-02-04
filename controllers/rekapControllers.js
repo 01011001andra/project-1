@@ -1,7 +1,11 @@
-const { Sequelize } = require("sequelize");
 const PelangganModel = require("../models/PelangganModels");
 const RekapModel = require("../models/RekapModels");
 const ExcelJS = require("exceljs");
+const { groupDataByWeek } = require("../utils/date");
+const { Op } = require('sequelize');
+const { DataTypes, literal } = require('sequelize');
+const db = require("../config/db");
+const moment = require('moment');
 
 exports.get = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
@@ -110,6 +114,32 @@ exports.searchTelp = async (req, res, next) => {
         .json({ success: false, msg: "Data tidak ditemukan!" });
     }
     res.status(200).json({ success: true, data: get });
+  } catch (error) {
+    res.status(500).json({ success: false, msg: error.message });
+  }
+};
+
+exports.grafik = async (req, res) => {
+  try {
+    const { bulan, tahun } = req.body;
+
+    // Ambil data berdasarkan bulan
+    const data = await RekapModel.findAll({
+      where: {
+        tanggal: {
+          [Op.and]: [
+            { [Op.like]: `%-${bulan < 10 ? '0' + bulan : bulan}-%` },
+            { [Op.like]: `%-${tahun}` }
+          ]
+        }
+      },
+      attributes: ['tanggal', 'harga']
+    });
+
+    // Fungsi untuk mengelompokkan data per minggu dan menggabungkan harga
+    const resultData = groupDataByWeek(data, bulan, tahun);
+
+    res.status(200).json({ success: true, data: resultData });
   } catch (error) {
     res.status(500).json({ success: false, msg: error.message });
   }

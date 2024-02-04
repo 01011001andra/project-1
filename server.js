@@ -16,7 +16,7 @@ const rekapRoute = require("./routes/rekap");
 
 const connectDB = async () => {
   try {
-    await db.sync();
+    await db.sync({ alter: true });
     await db.authenticate();
     console.log("Connection has been established successfully.");
   } catch (error) {

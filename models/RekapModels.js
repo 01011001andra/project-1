@@ -12,7 +12,7 @@ const RekapModel = db.define("rekapData", {
     type: DataTypes.STRING,
   },
   tanggal: {
-    type: DataTypes.STRING,
+    type: DataTypes.DATE,
   },
   totalKg: {
     type: DataTypes.FLOAT,
