@@ -1,3 +1,12 @@
+import { toast } from "react-toastify";
+
+export const successNotify = (text, id) => {
+  return toast.success(text, { autoClose: 3000, toastId: id });
+};
+export const errorNotify = (text, id) => {
+  return toast.error(text, { autoClose: 3000, toastId: id });
+};
+
 export const toRupiah = (IDR) => {
   const rupiah = new Intl.NumberFormat("id-ID", {
     style: "currency",
