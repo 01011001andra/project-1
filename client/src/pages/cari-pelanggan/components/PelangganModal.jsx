@@ -11,7 +11,6 @@ const PelangganModal = ({ detailPelanggan }) => {
       nama: detailPelanggan?.nama,
       no_telp: detailPelanggan?.no_telp,
       alamat: detailPelanggan?.alamat,
-      no_telp: detailPelanggan?.no_telp,
       ...data,
     };
 

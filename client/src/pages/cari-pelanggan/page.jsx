@@ -119,7 +119,7 @@ const CariPelanggan = () => {
                 <span className="label-text">Berat (Kg) :</span>
               </div>
               <input
-                type="number"
+                type="number" step="0.001"
                 {...register("totalKg")}
                 required
                 placeholder="Type here"

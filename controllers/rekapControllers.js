@@ -1,8 +1,9 @@
-const { Sequelize } = require("sequelize");
 const PelangganModel = require("../models/PelangganModels");
 const RekapModel = require("../models/RekapModels");
 const ExcelJS = require("exceljs");
-
+const { Op } = require('sequelize');
+const { DataTypes, literal } = require('sequelize');
+const db = require("../config/db");
 exports.get = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const pageSize = parseInt(req.query.pageSize) || 10;
@@ -111,6 +112,53 @@ exports.searchTelp = async (req, res, next) => {
     }
     res.status(200).json({ success: true, data: get });
   } catch (error) {
+    res.status(500).json({ success: false, msg: error.message });
+  }
+};
+exports.grafik = async (req, res) => {
+  try {
+    const { hari, bulan, tahun } = req.body;
+    let get;
+
+    if (hari !== '' && bulan !== '' && tahun !== '') {
+      get = await RekapModel.findAll({
+        attributes: ['tanggal', [db.fn('SUM', db.cast(db.col('harga'), 'INTEGER')), 'total_harga']],
+        where: {
+          tanggal: {
+            [Op.like]: `${hari.padStart(2, '0')}-${bulan.padStart(2, '0')}-${tahun}`
+          }
+        },
+        group: ['tanggal']
+      });
+    } else if (bulan !== '' && tahun !== '') {
+      get = await RekapModel.findAll({
+        attributes: ['tanggal', [db.fn('SUM', db.cast(db.col('harga'), 'INTEGER')), 'total_harga']],
+        where: {
+          tanggal: {
+            [Op.like]: `__-${bulan.padStart(2, '0')}-${tahun}`
+          }
+        },
+        group: ['tanggal']
+      });
+    } else if (tahun !== '') {
+      get = await RekapModel.findAll({
+        attributes: ['tanggal', [db.fn('SUM', db.cast(db.col('harga'), 'INTEGER')), 'total_harga']],
+        where: {
+          tanggal: {
+            [Op.like]: `__-__-${tahun}`
+          }
+        },
+        group: ['tanggal']
+      });
+    }
+
+    if (get && get.length > 0) {
+      return res.status(200).json({ success: true, data: get });
+    } else {
+      return res.status(404).json({ success: false, msg: 'Data not found' });
+    }
+  } catch (error) {
+    console.error("Error:", error);
     res.status(500).json({ success: false, msg: error.message });
   }
 };
