@@ -5,7 +5,6 @@ const { Op } = require("sequelize");
 const { DataTypes, literal } = require("sequelize");
 const db = require("../config/db");
 
-
 // MENAMPILKAN SEMUA DISKON
 exports.get = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
@@ -15,6 +14,7 @@ exports.get = async (req, res) => {
   try {
     let condition = {};
 
+    // Membuat kondisi pencarian jika ada 'searchTerm'
     if (searchTerm) {
       condition = {
         [Sequelize.Op.or]: [
@@ -41,12 +41,13 @@ exports.get = async (req, res) => {
         ],
       };
     }
-
+    // Menghitung total data yang sesuai dengan kondisi pencarian
     const totalCount = await RekapModel.count({ where: condition });
 
     // Hitung total halaman berdasarkan jumlah total data dan ukuran halaman
     const totalPages = Math.ceil(totalCount / pageSize);
 
+    // Mendapatkan data berdasarkan halaman dan kondisi pencarian
     const get = await RekapModel.findAll({
       order: [["createdAt", "ASC"]],
       where: condition,
@@ -54,6 +55,7 @@ exports.get = async (req, res) => {
       limit: pageSize,
     });
 
+    // Mengirimkan respons dengan data yang ditemukan
     res.status(200).json({
       success: true,
       currentPage: page,
@@ -62,6 +64,7 @@ exports.get = async (req, res) => {
       data: get,
     });
   } catch (error) {
+    // Mengirimkan respons jika terjadi kesalahan server
     res.status(500).json({ success: false, msg: error.message });
   }
 };
@@ -70,15 +73,17 @@ exports.get = async (req, res) => {
 exports.exportToExcel = async (req, res, next) => {
   const today = new Date();
   const yyyy = today.getFullYear();
-  let mm = today.getMonth() + 1; // Months start at 0!
+  let mm = today.getMonth() + 1; // Bulan dimulai dari 0!
   let dd = today.getDate();
   if (dd < 10) dd = "0" + dd;
   if (mm < 10) mm = "0" + mm;
   const formattedToday = dd + "-" + mm + "-" + yyyy;
   try {
+    // Mengambil semua data dari model Rekap
     const get = await RekapModel.findAll();
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet("Data");
+    // Menetapkan kolom-kolom di worksheet Excel
     worksheet.columns = [
       { header: "Tanggal", key: "tanggal", width: 15 },
       { header: "No_telp", key: "no_telp", width: 15 },
@@ -88,15 +93,22 @@ exports.exportToExcel = async (req, res, next) => {
     get.forEach((item) => {
       worksheet.addRow(item.dataValues);
     });
+
+    // Menetapkan nama file yang akan diunduh
     const namaFile = `filename=Data-(${formattedToday}).xlsx`;
     res.setHeader(
       "Content-Type",
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     );
     res.setHeader("Content-Disposition", `attachment; ${namaFile}`);
+
+    // Menulis workbook Excel ke respons
     await workbook.xlsx.write(res);
+
+    // Mengirimkan respons sukses jika file berhasil diunduh
     res.status(200).json({ success: true, msg: "Data Berhasil di download!" });
   } catch (error) {
+    // Mengirimkan respons jika terjadi kesalahan server
     res.status(500).json({ success: false, msg: error.message });
   }
 };
@@ -104,19 +116,26 @@ exports.exportToExcel = async (req, res, next) => {
 // CARI NOMOR TELPON
 exports.searchTelp = async (req, res, next) => {
   try {
+    // Memeriksa apakah nomor telepon ada dalam basis data
     const check = await RekapModel.count({
       where: { no_telp: req.body.no_telp },
     });
+
+    // Jika nomor telepon ditemukan, kirimkan data pelanggan
     const get = await RekapModel.findOne({
       where: { no_telp: req.body.no_telp },
     });
+    // Jika nomor telepon tidak ditemukan, kirimkan pesan kesalahan
     if (check === 0) {
       return res
         .status(400)
         .json({ success: false, msg: "Data tidak ditemukan!" });
     }
+    // Mengirimkan data pelanggan jika ditemukan
+
     res.status(200).json({ success: true, data: get });
   } catch (error) {
+    // Mengirimkan respons jika terjadi kesalahan server
     res.status(500).json({ success: false, msg: error.message });
   }
 };
@@ -127,7 +146,9 @@ exports.grafik = async (req, res) => {
     const { hari, bulan, tahun } = req.body;
     let get;
 
+    // Menentukan pilihan berdasarkan filter yang diberikan
     if (hari !== "" && bulan !== "" && tahun !== "") {
+      // Jika filter hari, bulan, dan tahun diatur
       get = await RekapModel.findAll({
         attributes: [
           "tanggal",
@@ -144,6 +165,7 @@ exports.grafik = async (req, res) => {
         group: ["tanggal"],
       });
     } else if (bulan !== "" && tahun !== "") {
+      // Jika filter bulan dan tahun diatur
       get = await RekapModel.findAll({
         attributes: [
           "tanggal",
@@ -157,6 +179,7 @@ exports.grafik = async (req, res) => {
         group: ["tanggal"],
       });
     } else if (hari !== "" && tahun !== "") {
+      // Jika filter hari dan tahun diatur
       get = await RekapModel.findAll({
         attributes: [
           "tanggal",
@@ -170,6 +193,7 @@ exports.grafik = async (req, res) => {
         group: ["tanggal"],
       });
     } else if (hari !== "" && bulan !== "") {
+      // Jika filter hari dan bulan diatur
       get = await RekapModel.findAll({
         attributes: [
           "tanggal",
@@ -186,6 +210,7 @@ exports.grafik = async (req, res) => {
         group: ["tanggal"],
       });
     } else if (tahun !== "") {
+      // Jika filter tahun diatur
       get = await RekapModel.findAll({
         attributes: [
           "tanggal",
@@ -205,13 +230,14 @@ exports.grafik = async (req, res) => {
       { length: get.length },
       () => "#" + Math.floor(Math.random() * 16777215).toString(16)
     );
-
+    // Mengirimkan respons dengan data grafik dan warna yang dihasilkan
     if (get && get.length > 0) {
       return res.status(200).json({ success: true, data: get, colors: colors });
     } else {
       return res.status(200).json({ success: true, data: get, colors: colors });
     }
   } catch (error) {
+    // Mengirimkan respons jika terjadi kesalahan server
     console.error("Error:", error);
     res.status(500).json({ success: false, msg: error.message });
   }
