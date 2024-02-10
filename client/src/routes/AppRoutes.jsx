@@ -8,7 +8,9 @@ import {
   HasilPenjualan,
   Login,
   RekapPenjualan,
+  TambahDiskon,
   TambahPelanggan,
+  UpdateDiskon,
   UpdatePelanggan,
 } from "../pages";
 
@@ -24,6 +26,8 @@ const AppRoutes = () => {
           element={<UpdatePelanggan />}
         />
         <Route path="/diskon" element={<Diskon />} />
+        <Route path="/diskon/tambah" element={<TambahDiskon />} />
+        <Route path="/diskon/update/:id" element={<UpdateDiskon />} />
         <Route path="/hasil-penjualan" element={<HasilPenjualan />} />
         <Route path="/rekap-penjualan" element={<RekapPenjualan />} />
       </Route>

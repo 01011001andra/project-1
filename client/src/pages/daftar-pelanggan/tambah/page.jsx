@@ -63,10 +63,11 @@ const TambahPelanggan = () => {
           </label>
           <label className="form-control w-full ">
             <div className="label">
-              <span className="label-text">Berat :</span>
+              <span className="label-text">Berat (Kg) :</span>
             </div>
             <input
               type="number"
+              step={0.01}
               {...register("totalKg")}
               placeholder="Type here"
               className="input input-bordered w-full "

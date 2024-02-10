@@ -1,16 +1,7 @@
 const { Sequelize } = require("sequelize");
 const PelangganModel = require("../models/PelangganModels");
-
-// exports.get = async (req, res, next) => {
-//   try {
-//     const get = await PelangganModel.findAll({
-//       order: [["status", "ASC"]],
-//     });
-//     res.status(200).json({ success: true, data: get, total: get.length });
-//   } catch (error) {
-//     res.status(500).json({ success: false, msg: error.message });
-//   }
-// };
+const RekapModel = require("../models/RekapModels");
+const db = require("../config/db");
 
 exports.get = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
@@ -48,7 +39,7 @@ exports.get = async (req, res) => {
     const totalPages = Math.ceil(totalCount / pageSize);
 
     const get = await PelangganModel.findAll({
-      // order: [["ASC"]],
+      order: [["createdAt", "ASC"]],
       where: condition,
       offset: (page - 1) * pageSize,
       limit: pageSize,
@@ -97,6 +88,7 @@ exports.update = async (req, res, next) => {
         nama: req.body.nama,
         alamat: req.body.alamat,
         no_telp: req.body.no_telp,
+        totalKg: req.body.totalKg,
       },
       {
         where: {
@@ -120,8 +112,24 @@ exports.remove = async (req, res, next) => {
   }
 };
 exports.complete = async (req, res, next) => {
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  let mm = today.getMonth() + 1; // Months start at 0!
+  let dd = today.getDate();
+  if (dd < 10) dd = "0" + dd;
+  if (mm < 10) mm = "0" + mm;
+  const formattedToday = dd + "-" + mm + "-" + yyyy;
   try {
-    res.status(200).json({ success: true, msg: "" });
+    const get = await PelangganModel.findOne({ where: { id: req.params.id } });
+    await RekapModel.create({
+      nama: get.nama,
+      tanggal: formattedToday,
+      totalKg: get.totalKg,
+      alamat: get.alamat,
+      no_telp: get.no_telp,
+      harga: req.body.harga,
+    });
+    next();
   } catch (error) {
     res.status(500).json({ success: false, msg: error.message });
   }
