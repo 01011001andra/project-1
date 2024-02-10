@@ -10,10 +10,12 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useLogin } from "../hooks/auth";
 import { useAuth } from "../stores";
+import useAutoAdmin from "../hooks/auth/useAutoAdmin";
+import { successNotify } from "../utils/helper";
 
 const Login = () => {
   const { loginResponse } = useAuth();
-
+  const { data } = useAutoAdmin();
   const { register, handleSubmit } = useForm();
   const mutation = useLogin();
 
@@ -99,14 +101,7 @@ const Login = () => {
                   />
                 </div>
               </div>
-              <div className="form-control">
-                <label className="label cursor-pointer flex justify-normal gap-3">
-                  <input type="checkbox" className="checkbox" />
-                  <span className="label-text text-blue-600 font-bold text-sm">
-                    Remember me
-                  </span>
-                </label>
-              </div>
+
               <div className="form-control mt-6">
                 <button
                   type="submit"
