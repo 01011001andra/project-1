@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useGetDiskon, usePostWhatsapp } from "../../../hooks";
-import { formatNomorTelepon, toRupiah } from "../../../utils/helper";
+import {
+  convertToWhatsAppFormat,
+  formatNomorTelepon,
+  toRupiah,
+} from "../../../utils/helper";
 import { useNavigate } from "react-router";
 
 const KirimWhatsappDetail = ({ detailPelanggan }) => {
@@ -44,7 +48,9 @@ total harga: ${
         
 Terima kasih.`);
 
-        const linkWhatsApp = `https://wa.me/${nomorWhatsApp}?text=${pesanTeks}`;
+        const linkWhatsApp = `https://wa.me/${convertToWhatsAppFormat(
+          nomorWhatsApp
+        )}?text=${pesanTeks}`;
 
         window.open(linkWhatsApp, "_blank");
       })

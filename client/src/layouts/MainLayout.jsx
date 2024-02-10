@@ -6,6 +6,7 @@ import { ModalConfirm } from "../components";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useLogout } from "../hooks/auth";
 import { useAuth } from "../stores";
+import { successNotify } from "../utils/helper";
 
 const MainLayout = ({ children }) => {
   const { pathname } = useLocation();
@@ -17,6 +18,7 @@ const MainLayout = ({ children }) => {
     refetchLogout();
     navigate("/", { replace: true });
     setLogout();
+    successNotify("Berhasil logout");
   }
 
   const showMainLayout = [

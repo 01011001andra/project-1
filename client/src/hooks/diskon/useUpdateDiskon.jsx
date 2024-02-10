@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { errorNotify, successNotify } from "../../utils/helper";
 
 const updateDiskon = (body) => {
   return axios.put(`/api/v1/diskon/${body.id}`, {
@@ -20,6 +21,10 @@ const useUpdateDiskon = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["diskon"] });
       navigate("/diskon");
+      successNotify("Berhasil diupdate!");
+    },
+    onError: (error) => {
+      errorNotify("Gagal update!");
     },
   });
 

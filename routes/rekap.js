@@ -14,6 +14,6 @@ router.route("/export").get(protect, exportToExcel);
 
 // cari no_telp
 router.route("/search").post(protect, searchRekapValidation, searchTelp);
-router.route('/grafik').post(protect, grafik);
+router.route("/grafik").post(protect, grafik);
 
 module.exports = router;

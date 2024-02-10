@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { errorNotify, successNotify } from "../../utils/helper";
 
 const updatePelanggan = (body) => {
   console.log(body);
@@ -23,6 +24,10 @@ const useUpdatePelanggan = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["pelanggan"] });
       navigate("/daftar-pelanggan");
+      successNotify("Berhasil mengupdate!");
+    },
+    onError: (error) => {
+      errorNotify("Gagal mengupdate!");
     },
   });
 

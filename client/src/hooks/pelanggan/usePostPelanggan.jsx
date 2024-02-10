@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { errorNotify, successNotify } from "../../utils/helper";
 
 const createPelanggan = (body) => {
   return axios.post("/api/v1/pelanggan", {
@@ -23,6 +24,10 @@ const usePostPelanggan = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["pelanggan"] });
       navigate("/daftar-pelanggan");
+      successNotify("Berhasil menambahkan!");
+    },
+    onError: (error) => {
+      errorNotify("Gagal menambahkan!");
     },
   });
 

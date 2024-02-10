@@ -41,7 +41,6 @@ app.use("/api/v1/rekap", rekapRoute);
 
 const PORT = process.env.PORT || 5000;
 
-
 app.listen(PORT, () => {
   console.log(
     `SERVER IS RUNNING IN MODE ${process.env.NODE_ENV} ON PORT ${process.env.PORT}`

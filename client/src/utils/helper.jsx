@@ -28,3 +28,14 @@ export function formatNomorTelepon(nomor) {
 
   return nomor;
 }
+
+export function convertToWhatsAppFormat(localPhoneNumber) {
+  // Cek apakah nomor telepon dimulai dengan "08"
+  if (localPhoneNumber.startsWith("08")) {
+    // Mengganti "08" dengan "+62"
+    return "+62" + localPhoneNumber.slice(1);
+  } else {
+    // Jika nomor tidak dimulai dengan "08", mengembalikan nomor asli
+    return localPhoneNumber;
+  }
+}

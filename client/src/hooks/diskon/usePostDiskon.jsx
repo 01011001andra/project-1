@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { errorNotify, successNotify } from "../../utils/helper";
 
 const createDiskon = (body) => {
   return axios.post("/api/v1/diskon", {
@@ -21,9 +22,10 @@ const usePostDiskon = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["diskon"] });
       navigate("/diskon");
+      successNotify("Berhasil menambahkan!");
     },
     onError: (error) => {
-      console.log(error);
+      errorNotify("Gagal menambahkan!");
     },
   });
 
