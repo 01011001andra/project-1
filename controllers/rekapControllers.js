@@ -140,7 +140,27 @@ exports.grafik = async (req, res) => {
         },
         group: ['tanggal']
       });
-    } else if (tahun !== '') {
+    }else if (hari !== '' && tahun !== '') {
+      get = await RekapModel.findAll({
+        attributes: ['tanggal', [db.fn('SUM', db.cast(db.col('harga'), 'INTEGER')), 'total_harga']],
+        where: {
+          tanggal: {
+            [Op.like]: `${hari.padStart(2, '0')}-__-${tahun}`
+          }
+        },
+        group: ['tanggal']
+      });
+    } else if (hari !== '' && bulan !== '') {
+      get = await RekapModel.findAll({
+        attributes: ['tanggal', [db.fn('SUM', db.cast(db.col('harga'), 'INTEGER')), 'total_harga']],
+        where: {
+          tanggal: {
+            [Op.like]: `${hari.padStart(2, '0')}-${bulan.padStart(2, '0')}-____`
+          }
+        },
+        group: ['tanggal']
+      });
+    }else if (tahun !== '') {
       get = await RekapModel.findAll({
         attributes: ['tanggal', [db.fn('SUM', db.cast(db.col('harga'), 'INTEGER')), 'total_harga']],
         where: {
@@ -150,7 +170,7 @@ exports.grafik = async (req, res) => {
         },
         group: ['tanggal']
       });
-    }
+    } 
 
     if (get && get.length > 0) {
       return res.status(200).json({ success: true, data: get });
