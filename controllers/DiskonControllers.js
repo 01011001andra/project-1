@@ -1,6 +1,9 @@
 const { Sequelize } = require("sequelize");
 const DiskonModel = require("../models/DiskonModels");
 
+
+
+//  GET SEMUA DISKON
 exports.get = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const pageSize = parseInt(req.query.pageSize) || 10;
@@ -58,6 +61,8 @@ exports.get = async (req, res) => {
   }
 };
 
+
+//  GET ONE DISKON
 exports.getOne = async (req, res) => {
   try {
     const get = await DiskonModel.findOne({ where: { id: req.params.id } });
@@ -67,6 +72,7 @@ exports.getOne = async (req, res) => {
   }
 };
 
+// MEMBUAT DISKON
 exports.create = async (req, res, next) => {
   try {
     await DiskonModel.create({
@@ -78,6 +84,8 @@ exports.create = async (req, res, next) => {
     res.status(500).json({ success: false, msg: error.message });
   }
 };
+
+// MENGUBAH DISKON
 exports.update = async (req, res, next) => {
   try {
     await DiskonModel.update(
@@ -96,6 +104,8 @@ exports.update = async (req, res, next) => {
     res.status(500).json({ success: false, msg: error.message });
   }
 };
+
+// MENGHAPUS DISKON
 exports.remove = async (req, res, next) => {
   try {
     await DiskonModel.destroy({ where: { id: req.params.id } });

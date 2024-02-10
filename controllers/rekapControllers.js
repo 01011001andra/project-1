@@ -4,6 +4,9 @@ const ExcelJS = require("exceljs");
 const { Op } = require("sequelize");
 const { DataTypes, literal } = require("sequelize");
 const db = require("../config/db");
+
+
+// MENAMPILKAN SEMUA DISKON
 exports.get = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const pageSize = parseInt(req.query.pageSize) || 10;
@@ -63,6 +66,7 @@ exports.get = async (req, res) => {
   }
 };
 
+// EXPORT KE EXCEL
 exports.exportToExcel = async (req, res, next) => {
   const today = new Date();
   const yyyy = today.getFullYear();
@@ -97,6 +101,7 @@ exports.exportToExcel = async (req, res, next) => {
   }
 };
 
+// CARI NOMOR TELPON
 exports.searchTelp = async (req, res, next) => {
   try {
     const check = await RekapModel.count({
@@ -116,6 +121,7 @@ exports.searchTelp = async (req, res, next) => {
   }
 };
 
+// GRAFIK
 exports.grafik = async (req, res) => {
   try {
     const { hari, bulan, tahun } = req.body;

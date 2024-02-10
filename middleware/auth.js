@@ -2,6 +2,8 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const UserModel = require("../models/UserModels");
 
+
+// MELIHAT ADA AKSES LOGIN ATAU ENGGA
 exports.protect = async (req, res, next) => {
   let token;
   token = req.cookies.token_key;

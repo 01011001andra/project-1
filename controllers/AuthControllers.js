@@ -2,6 +2,8 @@ const UserModel = require("../models/UserModels");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
+
+// FITUR LOGIN
 exports.login = async (req, res, next) => {
   try {
     const get = await UserModel.findOne({
@@ -31,6 +33,8 @@ exports.login = async (req, res, next) => {
   }
 };
 
+
+// FITUR MEMBUAT ADMIN OTOMATIS
 exports.autoAdmin = async (req, res, next) => {
   try {
     const get = await UserModel.count();
@@ -47,6 +51,8 @@ exports.autoAdmin = async (req, res, next) => {
   }
 };
 
+
+// FITUR LOGOUT
 exports.logout = async (req, res, next) => {
   try {
     res

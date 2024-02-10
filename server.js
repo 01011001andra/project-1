@@ -14,6 +14,8 @@ const pelangganRoute = require("./routes/Pelanggan");
 const diskonRoute = require("./routes/diskon");
 const rekapRoute = require("./routes/rekap");
 
+
+// Koneksi Ke Database
 const connectDB = async () => {
   try {
     await db.sync();
@@ -33,12 +35,15 @@ app.use(cookieParser());
 app.use(helmet());
 app.use(upload());
 
-// router
+// router API ke Front End
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/pelanggan", pelangganRoute);
 app.use("/api/v1/diskon", diskonRoute);
 app.use("/api/v1/rekap", rekapRoute);
 
+
+
+// Jalankan SERVER
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {

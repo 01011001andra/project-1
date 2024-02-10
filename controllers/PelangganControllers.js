@@ -3,6 +3,8 @@ const PelangganModel = require("../models/PelangganModels");
 const RekapModel = require("../models/RekapModels");
 const db = require("../config/db");
 
+
+// MENAMPILKAN SEMUA DISKON
 exports.get = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const pageSize = parseInt(req.query.pageSize) || 10;
@@ -57,6 +59,7 @@ exports.get = async (req, res) => {
   }
 };
 
+// MENAMPILKAN 1 DISKON
 exports.getOne = async (req, res, next) => {
   try {
     const get = await PelangganModel.findOne({ where: { id: req.params.id } });
@@ -65,6 +68,8 @@ exports.getOne = async (req, res, next) => {
     res.status(500).json({ success: false, msg: error.message });
   }
 };
+
+// MEMBUAT DISKON
 exports.create = async (req, res, next) => {
   try {
     await PelangganModel.create({
@@ -81,6 +86,8 @@ exports.create = async (req, res, next) => {
     res.status(500).json({ success: false, msg: error.message });
   }
 };
+
+// MENGUBAH DISKON
 exports.update = async (req, res, next) => {
   try {
     await PelangganModel.update(
@@ -103,6 +110,8 @@ exports.update = async (req, res, next) => {
     res.status(500).json({ success: false, msg: error.message });
   }
 };
+
+// MENGHAPUS DISKON
 exports.remove = async (req, res, next) => {
   try {
     await PelangganModel.destroy({ where: { id: req.params.id } });
@@ -111,6 +120,8 @@ exports.remove = async (req, res, next) => {
     res.status(500).json({ success: false, msg: error.message });
   }
 };
+
+// TOMBOL WHATSAPP 
 exports.complete = async (req, res, next) => {
   const today = new Date();
   const yyyy = today.getFullYear();
