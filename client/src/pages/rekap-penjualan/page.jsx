@@ -74,7 +74,7 @@ const RekapPenjualan = () => {
               {rekapData?.data?.map((item, index) => {
                 return (
                   <tr key={index}>
-                    <th>{index + 1}</th>
+                    <th>{index + 1 + 10 * (rekapData.currentPage - 1)}</th>
                     <td>{item.tanggal}</td>
                     <td>{item.totalKg}</td>
                     <td>{item.alamat}</td>

@@ -17,6 +17,7 @@ const HasilPenjualan = () => {
   const [dateGrafik, setDateGrafik] = useState();
   const [errorDataGrafik, setErrorDataGrafik] = useState(null);
   const currentYear = new Date().getFullYear();
+
   const yearsList = generateYears(2023, currentYear);
   const monthList = [
     "01",

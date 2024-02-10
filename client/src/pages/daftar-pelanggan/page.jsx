@@ -64,7 +64,7 @@ const DaftarPelanggan = () => {
               {pelangganData?.data?.map((item, index) => {
                 return (
                   <tr key={item.id}>
-                    <th>{index + 1}</th>
+                    <th>{index + 1 + 10 * (pelangganData.currentPage - 1)}</th>
                     <td>{item.nama}</td>
                     <td>{item.alamat}</td>
                     <td>{item.no_telp}</td>

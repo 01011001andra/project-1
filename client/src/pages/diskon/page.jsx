@@ -46,7 +46,7 @@ const Diskon = () => {
               {diskonData?.data?.map((item, index) => {
                 return (
                   <tr key={item.id}>
-                    <th>{index + 1}</th>
+                    <th>{index + 1 + 10 * (diskonData.currentPage - 1)}</th>
                     <td>{item.total}</td>
                     <td>{item.persen}%</td>
 

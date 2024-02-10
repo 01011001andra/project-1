@@ -59,7 +59,8 @@
 // export default Recharts;
 
 import React, { useCallback, useState } from "react";
-import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
+import { toRupiah } from "../../../utils/helper";
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
@@ -85,23 +86,32 @@ const renderCustomizedLabel = ({
       textAnchor={x > cx ? "start" : "end"}
       dominantBaseline="central"
     >
-      {`${(percent * 100).toFixed(0)}%`}
+      {`${(percent * 100).toFixed(1)}%`}
     </text>
   );
 };
 export default function Recharts({ data, colors }) {
-  // const data = [
-  //   { name: "Group A", value: 400 },
-  //   { name: "Group B", value: 300 },
-  //   { name: "Group C", value: 300 },
-  //   { name: "Group D", value: 200 },
-  // ];
-  console.log(colors);
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className={`custom-tooltip border bg-white rounded-lg p-4`}>
+          <p
+            className={`label font-bold `}
+          >{`Tanggal: ${payload[0]?.payload?.payload?.tanggal}`}</p>
+          <p className={`label font-bold `}>{`Total Harga:  ${toRupiah(
+            payload[0]?.payload?.payload?.total_harga
+          )}`}</p>
+        </div>
+      );
+    }
+    return null;
+  };
   return (
     <div className="w-full flex flex-col lg:flex-row gap-2">
       <div className="hidden lg:flex">
         <ResponsiveContainer width={600} height={600}>
           <PieChart width={600} height={600}>
+            <Tooltip content={<CustomTooltip />} />
             <Pie
               data={data}
               cx={"50%"}
@@ -140,7 +150,7 @@ export default function Recharts({ data, colors }) {
                 <tr id={index}>
                   <th>{index + 1}</th>
                   <td>{item.tanggal}</td>
-                  <td>{item.total_harga}</td>
+                  <td>{toRupiah(item.total_harga)}</td>
                   <td className="hidden lg:flex">
                     <input
                       type="color"
