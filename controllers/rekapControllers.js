@@ -150,27 +150,36 @@ exports.grafik = async (req, res) => {
         },
         group: ["tanggal"],
       });
-    }else if (hari !== '' && tahun !== '') {
+    } else if (hari !== "" && tahun !== "") {
       get = await RekapModel.findAll({
-        attributes: ['tanggal', [db.fn('SUM', db.cast(db.col('harga'), 'INTEGER')), 'total_harga']],
+        attributes: [
+          "tanggal",
+          [db.fn("SUM", db.cast(db.col("harga"), "INTEGER")), "total_harga"],
+        ],
         where: {
           tanggal: {
-            [Op.like]: `${hari.padStart(2, '0')}-__-${tahun}`
-          }
+            [Op.like]: `${hari.padStart(2, "0")}-__-${tahun}`,
+          },
         },
-        group: ['tanggal']
+        group: ["tanggal"],
       });
-    } else if (hari !== '' && bulan !== '') {
+    } else if (hari !== "" && bulan !== "") {
       get = await RekapModel.findAll({
-        attributes: ['tanggal', [db.fn('SUM', db.cast(db.col('harga'), 'INTEGER')), 'total_harga']],
+        attributes: [
+          "tanggal",
+          [db.fn("SUM", db.cast(db.col("harga"), "INTEGER")), "total_harga"],
+        ],
         where: {
           tanggal: {
-            [Op.like]: `${hari.padStart(2, '0')}-${bulan.padStart(2, '0')}-____`
-          }
+            [Op.like]: `${hari.padStart(2, "0")}-${bulan.padStart(
+              2,
+              "0"
+            )}-____`,
+          },
         },
-        group: ['tanggal']
+        group: ["tanggal"],
       });
-    }else if (tahun !== '') {
+    } else if (tahun !== "") {
       get = await RekapModel.findAll({
         attributes: [
           "tanggal",
@@ -184,6 +193,12 @@ exports.grafik = async (req, res) => {
         group: ["tanggal"],
       });
     }
+
+    // Membuat array warna hexa acak sebanyak jumlah objek dalam array 'get'
+    const colors = Array.from(
+      { length: get.length },
+      () => "#" + Math.floor(Math.random() * 16777215).toString(16)
+    );
 
     if (get && get.length > 0) {
       return res.status(200).json({ success: true, data: get, colors: colors });
